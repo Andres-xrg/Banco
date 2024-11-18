@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/estilos.css">
+    <title>Banco Springfield</title>
+</head>
+<body>
+    <img src="img/logo.png" alt="imagen" id="img">
+    <div class="info" id="banco">
+        <h2>Banco Springfield</h2>
+        <p><strong>Banco:</strong> <span id="banco-nombre"></span></p>
+        <p><strong>Sucursal:</strong> <span id="banco-sucursal"></span></p>
+        <p><strong>Titular:</strong> <span id="banco-titular"></span></p>
+        <p><strong>Número de Cuenta:</strong> <span id="banco-cuenta"></span></p>
+        <p><strong>Saldo:</strong></p>
+        <ul id="banco-saldo"></ul>
+        <p><strong>Número de Banco:</strong> <span id="banco-nro"></span></p>
+        <p><strong>Fecha de Apertura:</strong> <span id="banco-abierto"></span></p>
+    </div>
+    
+    <script>
+        fetch('banco.json')
+        .then(res => res.json())
+        .then((salida) => {
+
+            document.getElementById("banco-nombre").textContent = salida.banco;
+            document.getElementById("banco-sucursal").textContent = salida.sucursal;
+            document.getElementById("banco-titular").textContent = salida.titular;
+            document.getElementById("banco-cuenta").textContent = salida.nro_cuenta;
+            document.getElementById("banco-nro").textContent = salida.nro_banco;
+            document.getElementById("banco-abierto").textContent = salida.abierto;
+
+            let saldoList = document.getElementById("banco-saldo");
+            salida.saldo.forEach(moneda => {
+                let li = document.createElement("li");
+                li.textContent = `${moneda.monto.toFixed(2)} ${moneda.moneda}`;
+                saldoList.appendChild(li);
+            });
+        })
+        .fet
+        .catch(function(error) {
+            console.error('Error al obtener los datos:', error);
+            alert("No se pudo cargar el archivo JSON: " + error.message);
+        });
+    </script>
+</body>
+    </html>
